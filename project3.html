@@ -2,7 +2,7 @@
 
 <html>
 	<head>
-		<title>Infant Videofluoroscopy Chair</title>
+		<title>Bimanual Teleoperation</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
@@ -46,45 +46,38 @@
 				<!-- Main -->
 					<div id="main">
 						<div class="inner">
-							<h1>Infant Videofluoroscopy Chair</h1>
-							<h2>Intern at Northwestern's Segal Design Institute</h2>
+							<h1>Bimanual Teleoperation</h1>
+							<h2>PhD project - Human Factors Institute</h2>
 								<div class="row">
 									<div class="col-6 col-12-medium">
-										<h4>Designing for Real-World Applications</h4>
-										<p>As an intern for the Segal Design Institute, I worked with partners of the university to solve design challenges. In this case, I partnered with a doctor in Northwestern's Fienberg school of medicine that conducted swallowing studies on infant babies. They expressed the need to have an adjustable chair for infants that could adequately restrain them while also not interfering with their X-ray equipment. </p>
-										<p>A large part of this project required understanding the core needs of our client. By interviewing our client and other doctors, I found that there were three core qualities needed in our infant videofluoroscopy chair:</p>
-										<ul>
-											<li>Quick setup and breakdown</li>
-											<li>Comfortable restraint of different sized babies</li>
-											<li>No material interferance with X-rays</li>
-										</ul>
-										<p>The final design (right) featured an adjustable peg-board design with a moldable headrest and cushioned base on an easily cleaned acryllic base.</p>
+										<h4>Project Description</h4>
+										<p></p>
+										<p>The Office of Naval Research funded a multi-institutional collaboration between UCLA, Case Western Reserve University, and Cleveland State University entitled "Embodied Robotics". The goal of the project and collaboration is to create a teleoperated bimanual robotic system which can be operated by a user in virtual reality and across large physical distances. The system (seen in CAD to the right) consists of a dominant arm - a redundant Franka Emika FR3 manipulator outfitted with a LEAP hand - and a non dominant Universal Robots UR5e manipulator outfitted with a Robotiq 3-finger gripper.</p>
+										<p>I was tabbed to be the controls team lead in charge of creating the robot controller which takes in hand pose inputs from the VR headset and commands robot joint velocities.</p>
+				
+										<p></p>
 									</div>
 									<div class="col-6 col-12-medium">
-										<p><span class="image fit"><img src="images/final.jpg" alt="version one prototype" span></p>
+										<p><span class="image fit"><img src="images/onr_cad.jpg" alt="Office of Naval Research system CAD" span></p>
 									</div>
 								</div>
 
-								<div class="row">
-									<div class="col-6 col-12-medium">
-										<p><span class="image fit"><img src="images/test.jpg" alt="CAD model of prototype" span></p>
-									</div>
-									<div class="col-6 col-12-medium">
-										<h4>Importance of Testing</h4>
-										<p>Throughout this process, I learned the importance of creating and running quality experiments with sound analysis. In testing upholstery materials for stain resistance (left), I utilized factorial testing, and ran a partial factorial test to determine the best combination of materials for stain resistance, babies tend to be messy! This testing provided us with the ideal material to upholster our chair with. </p>
-										<h4>Rapid Prototyping</h4>
-										<p>I also learned most of my rapid prototyping skills from this project. I learned how to laser cut, sew, and mill complex geometries by hand. These skills were necessary for quick iteration so that I could gain quick feedback from the client without wasting precious time. Prototyping and testing allowed for us to validate specific design features and offer our client multiple options in one meeting.</p>
-										<p>Check out some of my iteration below!</p>
-									</div>
-								</div>
-								<h2>Evolution of the infant chair</h2>
-								<div class="box alt">
-									<div class="row gtr-uniform">
-										<div class="col-4"><span class="image fit"><img src="images/pegboard.jpg" alt="" /></span></div>
-										<div class="col-4"><span class="image fit"><img src="images/wood.jpg" alt="" /></span></div>
-										<div class="col-4"><span class="image fit"><img src="images/mock.jpg" alt="" /></span></div>
-									</div>
-								</div>
+								
+
+										<h4>Determining and Meeting Requirements</h4>
+										<p>The controller had to meet three main requirements:</p>
+										<ul>
+											<li>Avoid kinematic singularities</li>
+											<li>Be capable of "palm up" and "palm down" hand configurations</li>
+											<li>Be fast enough to keep up with human movements</li>
+										</ul>
+										<p>The controller I developed is an optimization based controller </p>
+										<p>Take a look at the demo below! The top left video is an external video feed, the bottom left video is the operator view in VR and the right video is an external view of the operator in the system.</p>
+									<video width="1280" height="720" controls muted>
+										<source src="images/onr_demo.mp4" type=video/mp4>
+									</video>
+		
+								
 							</div>
 						</div>
 
