@@ -2,7 +2,7 @@
 
 <html>
 	<head>
-		<title>Auto-Spout</title>
+		<title>FlexiForce</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
@@ -47,31 +47,41 @@
 					<div id="main">
 
 						<div class="inner">
-							<h1>Auto-Spout</h1>
-							<h2>Internship Work for WAGIC, Inc.</h2>
+							<h1>FlexiForce</h1>
+							<h2>EMG-Driven Admittance Control for Rehabilitation Robotics</h2>
 								<div class="row">
 									<div class="col-6 col-12-medium">
-										<p><span class="image fit"><img src="images/battery.jpg" alt="the auto-spout device" span></p>
+										<p><span class="image fit"><img src="images/flexibot.jpg" alt="Franka Emika FR3 robot in MuJoCo simulation" span></p>
 									</div>
 									<div class="col-6 col-12-medium">
-										<h4>Analyzing the User Experience</h4>
-										<p>I was tasked with reviewing the Auto-Spout, a Japanese product. The makers hired my company to help redesign the kitchen device and introduce it to the American market. The device was intended to retrofit old sinks with the ability to be hands free, attacking a niche population that want this function without having to buy a new fixture. </p>
-										<h4>Reverse Engineering the Auto-Spout</h4>
-										<p>As I dissected the Auto-Spout, I found a fatal flaw. The battery pack was sealed with a press-fit using an O-ring. Unfortunately, the cords going from the battery pack to the internals of the Auto-Spout prevented the press-fit from being effective. This is not safe for a product that is intended to be used near the water. </p>
-										<p>Additionally, I thought the form factor was clunky, and the materials felt cheap. I recommended the use of heavier plastics and included this in my own redesign. </p>
+										<h4>Project Overview</h4>
+										<p>FlexiForce is a simulated rehabilitation system that integrates EMG-based user feedback with an admittance controller to dynamically adjust resistance during exercise. Using a redundant robot arm modeled in MuJoCo and muscle dynamics from OpenSim, the system targets stability, responsiveness, and user-specific force adaptation in real time.</p>
+										<h4>Technical Innovation</h4>
+										<p>The system combines MuJoCo's physics engine for robotic simulation with OpenSim's musculoskeletal modeling tools, enabling integrated analysis of force, activation, and position. A quarter-circle trajectory simulates repetitive upper-limb motions, while force tracking and biceps activation data are logged and analyzed across timesteps.</p>
+										<p>This unified Python-based framework facilitates rapid testing and optimization of EMG-informed control strategies for personalized rehabilitation protocols.</p>
 									</div>
 								</div>
 
 								<div class="row">
 									<div class="col-6 col-12-medium">
-										<h4>Redesigning the Device</h4>
-										<p>I learned the CAD software CREO and overhauled the body and configuration of the appliance. The internals and electronics were sound, but I needed to address how the batteries were secured. I took inspiration from the sliding battery cases found in other products like remote-controlled toys and television remotes. </p>
-										<p>Additionally, I changed the materials and ensured that my design was appropriate to injection mold. My overall report was sent to the client and utilized to inform their decisions in taking the product to market. </p>
+										<h4>Controller Design & Implementation</h4>
+										<p>I developed the MuJoCo simulation environment using a 7-DoF Franka Emika FR3 robot imported from Google DeepMind's high-fidelity model library. The redundant manipulator was chosen to better mimic human arm motions during rehabilitation exercises.</p>
+										<p>I created a custom ergonomic handle design for single-arm bicep curl applications and implemented the complete controller architecture. This included developing the admittance control law, inverse kinematics solutions, and PD position control systems that work together to provide adaptive resistance based on real-time muscle activation feedback.</p>
+										<p>My contributions also included extensive controller gain tuning to achieve system stability while maintaining accurate trajectory tracking and responsive force adaptation.</p>
 									</div>
 									<div class="col-6 col-12-medium">
-										<p><span class="image fit"><img src="images/button.jpg" alt="my changes to the auto-spout" span></p>
+										<p><span class="image fit"><img src="images/openSIM.jpg" alt="OpenSim musculoskeletal model during biceps curl" span></p>
 									</div>
-							</div>
+								</div>
+
+								<div class="row">
+									<div class="col-12">
+										<h4>System Architecture & Results</h4>
+										<p>The controller implements an admittance control law that models the end-effector dynamics as a mass-damper-spring system. At each timestep, the system calculates deviations between measured and desired positions, adapts stiffness gains based on muscle activation feedback, and applies the resulting forces through inverse dynamics calculations.</p>
+										<p>Our results demonstrate successful integration of EMG-driven feedback with robotic control, achieving stable force application and accurate trajectory tracking. The final tuned controller showed significant improvements over preliminary versions, with proportional gains of Kp = 2000 for position control and carefully balanced force controller gains (Gp = 100, Gi = 200, Gd = 0.1) that eliminated instabilities around peak muscle activation.</p>
+										<p>The modular Python framework includes tunable controller parameters, synthetic and real activation data interfaces, and comprehensive visualization tools for analyzing applied force, trajectory tracking, and activation matching - providing a complete platform for rehabilitation robotics research and development.</p>
+									</div>
+								</div>
 						</div>
 					</div>
 
