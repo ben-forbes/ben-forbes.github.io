@@ -47,13 +47,13 @@
 					<div id="main">
 						<div class="inner">
 							<h1>Bimanual Teleoperation</h1>
-							<h2>PhD project - Human Factors Institute</h2>
+							<h2>PhD project - University of California, Los Angeles</h2>
 								<div class="row">
 									<div class="col-6 col-12-medium">
 										<h4>Project Description</h4>
 										<p></p>
-										<p>The Office of Naval Research funded a multi-institutional collaboration between UCLA, Case Western Reserve University, and Cleveland State University entitled "Embodied Robotics". The goal of the project and collaboration is to create a teleoperated bimanual robotic system which can be operated by a user in virtual reality and across large physical distances. The system (seen in CAD to the right) consists of a dominant arm - a redundant Franka Emika FR3 manipulator outfitted with a LEAP hand - and a non dominant Universal Robots UR5e manipulator outfitted with a Robotiq 3-finger gripper.</p>
-										<p>I was tabbed to be the controls team lead in charge of creating the robot controller which takes in hand pose inputs from the VR headset and commands robot joint velocities.</p>
+										<p>The Office of Naval Research funded a multi-institutional collaboration between UCLA, Case Western Reserve University, and Cleveland State University. The goal of the project and collaboration is to create a teleoperated bimanual robotic system which can be operated by a user in virtual reality and across large physical distances. The system (seen in CAD to the right) consists of a dominant arm - a 7-DOF Franka Emika FR3 manipulator outfitted with a multi-digit LEAP hand - and a non dominant 6-DOF Universal Robots UR5e manipulator outfitted with a Robotiq 3-finger gripper.</p>
+										<p>As the Controls Team Lead, I lead the development and testing of closed-loop robot controllers that accept human inputs from a VR headset, command robot joint velocities, and provide multimodal feedback, including the sense of touch.</p>
 				
 										<p></p>
 									</div>
@@ -64,16 +64,17 @@
 
 								
 
-										<h4>Determining and Meeting Requirements</h4>
-										<p>The controller had to meet three main requirements:</p>
+										<h4>Design Requirements</h4>
+										<p>The controller had to meet a number of requirements, including:</p>
 										<ul>
 											<li>Avoid kinematic singularities</li>
+											<li>Maximize manipulability of the end effector</li>
 											<li>Be capable of "palm up" and "palm down" hand configurations</li>
 											<li>Be fast enough to keep up with human movements</li>
 										</ul>
-										<p>The controller I developed is an optimization based controller </p>
-										<p>Take a look at the demo below! The top left video is an external video feed, the bottom left video is the operator view in VR and the right video is an external view of the operator in the system.</p>
-									<video width="1280" height="720" controls muted>
+										<p>The controller I developed is an optimization-based controller that maximizes manipulability and minimizes joint velocities within the kinematic limits of the arm.</p>
+										<p>Take a look at the demo below at 2X speed! The video on the left is an external video feed of the robotic system, the top right video is the operator view in VR and the bottom left video is an external view of the operator performing a task with the system.</p>
+									<video width="1180" height="720" controls muted>
 										<source src="images/onr_demo.mp4" type=video/mp4>
 									</video>
 		
