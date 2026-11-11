@@ -1,115 +1,114 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>Human-Centered Bimanual Teleoperation | Benjamin Forbes</title>
+	<meta name="description" content="Bimanual passthrough teleoperation for remote embodiment, with touch feedback and learning-based shared autonomy driven by eye gaze." />
+	<meta property="og:type" content="article" />
+	<meta property="og:title" content="Human-Centered Bimanual Teleoperation | Benjamin Forbes" />
+	<meta property="og:description" content="Bimanual passthrough teleoperation for remote embodiment, with touch feedback and learning-based shared autonomy driven by eye gaze." />
+	<meta property="og:image" content="https://ben-forbes.github.io/images/og.jpg" />
+	<meta name="twitter:card" content="summary_large_image" />
+	<link rel="icon" type="image/png" href="favicon.png" />
+	<link rel="apple-touch-icon" href="apple-touch-icon.png" />
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,900&display=swap" />
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap" />
+	<link rel="stylesheet" href="assets/css/fontawesome-all.min.css" />
+	<link rel="stylesheet" href="assets/css/home.css" />
+</head>
+<body>
 
-<html>
-	<head>
-		<title>Bimanual Teleoperation</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="assets/css/main.css" />
-		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
-	</head>
-	<body class="is-preload">
-		<!-- Wrapper -->
-			<div id="wrapper">
+<header class="topbar">
+	<div class="wrap topbar-inner">
+		<a class="brand" href="index.html"><img src="images/logo.jpg" alt="" /><span>Benjamin Forbes</span></a>
+		<nav>
+			<a href="index.html#research">Research</a>
+			<a href="index.html#publications">Publications</a>
+			<a href="index.html#honors">Honors</a>
+			<a href="index.html#leadership">Leadership</a>
+			<a href="Ben_Forbes_CV.pdf" target="_blank">CV</a>
+		</nav>
+	</div>
+</header>
 
-				<!-- Header -->
-					<header id="header">
-						<div class="inner">
+<main class="wrap page">
+	<p class="crumbs"><a href="index.html#humans">&larr; Back</a></p>
+	<header class="ph">
+		<h1>Human-Centered Bimanual Teleoperation</h1>
+		<p class="meta">Human Fusions Institute (UCLA, Case Western, Cleveland State) &middot; IEEE Haptics Symposium poster, 2026</p>
+		<p class="dek">A two-arm robot that a person operates through a passthrough headset across large distances, seeing through the robot&rsquo;s camera and still <i>feeling</i> what it touches, and a shared autonomy controller that learns from each operator.</p>
+		<div class="rolebox">
+		<p><b>My part:</b> I lead the controls team. I wrote the teleoperation controller and run the shared autonomy study.</p>
+		</div>
+		<p class="lk"><a href="#video">Video</a> <span class="sep">&middot;</span> <a href="Forbes_HapticsSymposium2026_poster.pdf" target="_blank">Poster (PDF)</a></p>
+	</header>
 
-							<!-- Logo -->
-								<a href="index.html" class="logo">
-									<span class="symbol"><img src="images/logo.jpg" alt="" /></span><span class="title">Ben Forbes</span>
-								</a>
+	<figure class="figure"><video autoplay muted loop playsinline preload="metadata" poster="images/teleop_loop_poster.jpg" aria-label="Operator in a passthrough headset beside the two robot arms as they finish the pulley task"><source src="images/teleop_loop.mp4" type="video/mp4" /></video><figcaption>The operator (left) pulls the rope through the robot (right) to trigger the pulley. 1.5&times; speed.</figcaption></figure>
 
-							<!-- Nav -->
-								<nav>
-									<ul>
-										<li><a href="#menu">Menu</a></li>
-									</ul>
-								</nav>
+	<h2>The system</h2>
+	<p>The Office of Naval Research funds this collaboration between UCLA, Case Western Reserve University and Cleveland State University. The system pairs a 7-DOF Franka Emika FR3 with a 6-DOF Universal Robots UR5e. Each arm carries a gripper instrumented with vision-based tactile sensors, and an egocentric camera streams the scene to the operator&rsquo;s headset.</p>
+	<figure class="figure wide"><img src="images/teleop_overview.jpg" alt="Human, interface and robot: the operator in a passthrough headset, the four mappings between them, and the bimanual robot" loading="lazy" /><figcaption>The operator, the interface between them, and the robot.</figcaption></figure>
 
-						</div>
-					</header>
+	<h3>How the person and the robot connect</h3>
+	<div class="split">
+		<div>
+			<p>Four channels tie the operator to the robot. Moving the wrist moves the arm, and closing the hand closes the gripper.</p>
+			<p>When the gripper&rsquo;s tactile sensors touch something, the operator feels it on their hand through neurohaptic display rings designed by our collaborators at Case Western.</p>
+			<p>Turning the head turns the camera, and its view streams back to the headset.</p>
+		</div>
+		<figure class="figure"><img src="images/teleop_mapping.jpg" alt="Wrist, finger, tactile and head-and-vision mappings between operator and robot" loading="lazy" /><figcaption>Clockwise from top left: wrist, finger, head and vision, tactile.</figcaption></figure>
+	</div>
 
-				<!-- Menu -->
-					<nav id="menu">
-						<h2>Menu</h2>
-						<ul>
-							<li><a href="index.html">Home</a></li>
-							<li><a href="index.html#target">Projects</a></li>
-							<li><a href="swimming.html">Swimming</a></li>
-							<li><a href="aboutme.html">About Me</a></li>
-							<li><a target="_blank" href="Ben_Forbes_Resume.pdf">Resume</a></li>
-						</ul>
-					</nav>
+	<h2>Teleoperation controller</h2>
+	<div class="split">
+		<div>
+			<p>The controller had to:</p>
+			<ul class="dots">
+				<li>Avoid kinematic singularities</li>
+				<li>Maximize manipulability of the end effector</li>
+				<li>Support both &ldquo;palm up&rdquo; and &ldquo;palm down&rdquo; hand configurations</li>
+				<li>Keep up with human movements</li>
+			</ul>
+			<p>I developed an optimization-based controller that maximizes manipulability and minimizes joint velocities within each arm&rsquo;s kinematic limits, keeping the robot responsive and predictable so the operator feels embodied in it. It runs in ROS 2 across both arms.</p>
+		</div>
+		<figure class="figure"><img src="images/onr_cad.jpg" alt="CAD of the bimanual teleoperation system" loading="lazy" /><figcaption>System CAD.</figcaption></figure>
+	</div>
 
-				<!-- Main -->
-					<div id="main">
-						<div class="inner">
-							<h1>Bimanual Teleoperation</h1>
-							<h2>PhD project - University of California, Los Angeles</h2>
-								<div class="row">
-									<div class="col-6 col-12-medium">
-										<h4>Project Description</h4>
-										<p></p>
-										<p>The Office of Naval Research funded a multi-institutional collaboration between UCLA, Case Western Reserve University, and Cleveland State University. The goal of the project and collaboration is to create a teleoperated bimanual robotic system which can be operated by a user in virtual reality and across large physical distances. The system (seen in CAD to the right) consists of a dominant arm - a 7-DOF Franka Emika FR3 manipulator outfitted with a multi-digit LEAP hand - and a non dominant 6-DOF Universal Robots UR5e manipulator outfitted with a Robotiq 3-finger gripper.</p>
-										<p>As the Controls Team Lead, I lead the development and testing of closed-loop robot controllers that accept human inputs from a VR headset, command robot joint velocities, and provide multimodal feedback, including the sense of touch.</p>
-				
-										<p></p>
-									</div>
-									<div class="col-6 col-12-medium">
-										<p><span class="image fit"><img src="images/onr_cad.jpg" alt="Office of Naval Research system CAD" span></p>
-									</div>
-								</div>
+	<h2>Learning-based shared autonomy</h2>
+	<div class="split">
+		<figure class="figure"><img src="images/teleop_interface.jpg" alt="Operator wearing a passthrough headset with eye tracking, ECG and neurohaptic rings" loading="lazy" /><figcaption>What we capture from the operator.</figcaption></figure>
+		<div>
+			<p>Shared autonomy systems are usually judged on task speed and accuracy. My research asks how they feel to the person in the loop: <b>sense of agency, trust and embodiment</b>. Touch anchors the operator&rsquo;s presence while working remotely.</p>
+			<p>While participants teleoperate, we capture eye gaze (direction, pupil diameter, focus distance) from a Varjo headset, ECG, and head, wrist and finger kinematics, as windows into the operator&rsquo;s experience, not just markers of performance.</p>
+		</div>
+	</div>
+	<div class="split">
+		<div>
+			<p>In <b>Phase 1</b>, participants perform the task with direct teleoperation. Their data trains a <b>personalized shared autonomy controller</b> that incorporates gaze and tactile information. In <b>Phase 2</b>, they return and repeat the task under randomized A/B conditions, shared autonomy versus direct teleoperation, with workload and trust surveys alongside the multimodal data.</p>
+			<p>The task is deliberately open-ended: place pulleys, thread a rope, and clip a carabiner to move a breakable object to a goal, a problem that rewards human creativity and long-horizon planning.</p>
+		</div>
+		<figure class="figure"><img src="images/teleop_design.jpg" alt="Two-phase experimental design" loading="lazy" /><figcaption>Two-phase study design.</figcaption></figure>
+	</div>
 
-								
+	<h2 id="video">Full demo</h2>
+	<p>One continuous take at 1&times; speed: an operator wearing the passthrough headset completes the five-step pulley task (clip the carabiner, route the rope, close the pulley, hang it on the hook, and pull the rope to trigger the pulley). Panels show the robot, the headset view and eyes, tactile feedback, and heart rate.</p>
+	<figure class="figure"><video controls muted playsinline preload="metadata" poster="images/onr_demo_web_poster.jpg" aria-label="Full one-take teleoperation demo"><source src="images/onr_demo_web.mp4" type="video/mp4" /></video></figure>
+	<figure class="figure"><img src="images/teleop_task.jpg" alt="Pulley and carabiner task, before and after" loading="lazy" /><figcaption>The task board before and after.</figcaption></figure>
+	<p>Presented at the <b>IEEE Haptics Symposium 2026</b> (Cross-Cutting Challenge: Touch, Embodiment, and Multisensory Future). <a href="Forbes_HapticsSymposium2026_poster.pdf" target="_blank">View the poster (PDF)</a>.</p>
+	<nav class="next"><a href="project7.html"><small>&larr; Previous</small>H2Opti</a><a class="r" href="project8.html"><small>Next &rarr;</small>Autonomous Laryngoscopy</a></nav>
+</main>
 
-										<h4>Design Requirements</h4>
-										<p>The controller had to meet a number of requirements, including:</p>
-										<ul>
-											<li>Avoid kinematic singularities</li>
-											<li>Maximize manipulability of the end effector</li>
-											<li>Be capable of "palm up" and "palm down" hand configurations</li>
-											<li>Be fast enough to keep up with human movements</li>
-										</ul>
-										<p>The controller I developed is an optimization-based controller that maximizes manipulability and minimizes joint velocities within the kinematic limits of the arm.</p>
-										<p>Take a look at the demo below at 2X speed! The video on the left is an external video feed of the robotic system, the top right video is the operator view in VR and the bottom left video is an external view of the operator performing a task with the system.</p>
-									<!--<video width="1180" height="720" controls muted>
-										<source src="images/onr_demo.mp4" type=video/mp4>
-									</video> -->
-		
-								
-							</div>
-						</div>
-
-
-				<!-- Footer -->
-				<footer id="footer">
-					<div class="inner">
-						<section>
-							<h2>Contact</h2>
-							<p>benforbes@g.ucla.edu</p>
-							<p>(559)326-9331</p>
-						</section>
-						<section>
-							<h2>Follow</h2>
-							<ul class="icons">
-								<li><a href="https://www.linkedin.com/in/benjamin-forbes-8b8379203/" class="icon brands style2 fa-linkedin"><span class="label">LinkedIn</span></a></li>
-								<li><a href="https://twitter.com/fenborbes" class="icon brands style2 fa-twitter"><span class="label">Twitter</span></a></li>
-								<li><a href="https://www.instagram.com/fen_borbes/?hl=en" class="icon brands style2 fa-instagram"><span class="label">Instagram</span></a></li>
-								<li><a href="mailto:benforbes2023@u.northwestern.edu" class="icon solid style2 fa-envelope"><span class="label">Email</span></a></li>
-							</ul>
-						</section>
-					</div>
-				</footer>
-			</div>
-
-		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/browser.min.js"></script>
-			<script src="assets/js/breakpoints.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<script src="assets/js/main.js"></script>
-
-	</body>
+<footer class="foot">
+	<div class="wrap">
+		<span>&copy; Benjamin Forbes &middot; <a href="mailto:benforbes@ucla.edu">benforbes@ucla.edu</a></span>
+		<span class="icons">
+			<a href="https://scholar.google.com/citations?user=huMsObgAAAAJ&amp;hl=en" aria-label="Google Scholar"><i class="fas fa-graduation-cap"></i></a>
+			<a href="https://github.com/ben-forbes" aria-label="GitHub"><i class="fab fa-github"></i></a>
+			<a href="https://www.linkedin.com/in/benjamin-forbes-8b8379203/" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+			<a href="https://twitter.com/fenborbes" aria-label="X / Twitter"><i class="fab fa-twitter"></i></a>
+		</span>
+	</div>
+</footer>
+</body>
 </html>

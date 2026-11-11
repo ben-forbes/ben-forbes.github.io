@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>Autonomous Robotic Laryngoscopy | Benjamin Forbes</title>
+	<meta name="description" content="A robot that autonomously steers a flexible laryngoscope to a diagnostic view of the vocal cords." />
+	<meta property="og:type" content="article" />
+	<meta property="og:title" content="Autonomous Robotic Laryngoscopy | Benjamin Forbes" />
+	<meta property="og:description" content="A robot that autonomously steers a flexible laryngoscope to a diagnostic view of the vocal cords." />
+	<meta property="og:image" content="https://ben-forbes.github.io/images/og.jpg" />
+	<meta name="twitter:card" content="summary_large_image" />
+	<link rel="icon" type="image/png" href="favicon.png" />
+	<link rel="apple-touch-icon" href="apple-touch-icon.png" />
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,900&display=swap" />
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap" />
+	<link rel="stylesheet" href="assets/css/fontawesome-all.min.css" />
+	<link rel="stylesheet" href="assets/css/home.css" />
+</head>
+<body>
+
+<header class="topbar">
+	<div class="wrap topbar-inner">
+		<a class="brand" href="index.html"><img src="images/logo.jpg" alt="" /><span>Benjamin Forbes</span></a>
+		<nav>
+			<a href="index.html#research">Research</a>
+			<a href="index.html#publications">Publications</a>
+			<a href="index.html#honors">Honors</a>
+			<a href="index.html#leadership">Leadership</a>
+			<a href="Ben_Forbes_CV.pdf" target="_blank">CV</a>
+		</nav>
+	</div>
+</header>
+
+<main class="wrap page">
+	<p class="crumbs"><a href="index.html#medicine">&larr; Back</a></p>
+	<header class="ph">
+		<h1>Autonomous Robotic Laryngoscopy</h1>
+		<p class="meta">UCLA Head &amp; Neck Surgery and EndoSight Systems &middot; Manuscript in preparation</p>
+		<p class="dek">A robot that steers a flexible endoscope through the nose to a diagnostic view of the vocal cords, so a specialist can review the exam from anywhere.</p>
+		<div class="rolebox">
+		<p><b>My part:</b> I specified, designed, built and tested the robot, and wrote the generative control policies. I&rsquo;m the robotics lead on the EndoSight Systems team.</p>
+		</div>
+		<p class="lk"><a href="#video">Video</a> <span class="sep">&middot;</span> <a href="#news">In the news</a></p>
+	</header>
+
+
+	<figure class="figure"><img src="images/dfl_system.jpg" alt="Robotic laryngoscopy platform and its three degrees of freedom" loading="lazy" /><figcaption>The platform and its three degrees of freedom: advance/retract, roll and tip deflection.</figcaption></figure>
+
+	<h2>Why it matters</h2>
+	<p>Roughly 30 million people in the U.S. experience a voice disorder each year. The standard exam, diagnostic flexible laryngoscopy, passes a thin camera through the nose to look at the vocal cords, and it requires an otolaryngologist in the room. Specialists are scarce outside major cities, so rural patients face long trips and delayed diagnoses, including of laryngeal cancer.</p>
+	<p>Our idea is to separate <b>acquiring</b> the video from <b>interpreting</b> it: a robot safely captures the exam on site, and a specialist reviews it remotely, much like echocardiograms are recorded by technicians and read by cardiologists.</p>
+
+	<h2>The system</h2>
+	<p>The platform drives a commercial single-use flexible endoscope through three degrees of freedom: advance/retract along the scope, roll about its axis, and tip deflection through the scope&rsquo;s own control lever. Every axis has physical and software stops plus velocity limits drawn from expert demonstration videos.</p>
+	<h3>Two ways to steer</h3>
+	<p>The first is an interpretable vision pipeline: an onboard edge computer runs a lightweight convolutional network on the live video to segment the open airway, recognize where the scope is (nasal cavity, velum, epiglottis, larynx), and track the glottis once it is in view.</p>
+	<p>The second is a <b>diffusion policy trained on expert demonstrations collected in 11 cadavers</b>. Learning directly from how experts drive the scope can capture nuanced movements that rigid rules miss, like recovering when secretions blur the view.</p>
+	<p>We have characterized contact forces and durability on the bench and evaluated autonomous navigation in a cadaveric feasibility study.</p>
+
+	<h2 id="video">Demo</h2>
+	<figure class="figure"><video controls muted playsinline preload="metadata" poster="images/laryngoscopy_demo_poster.jpg" aria-label="Robot advancing a flexible endoscope into a manikin"><source src="images/laryngoscopy_demo.mp4" type="video/mp4" /></video><figcaption>The robot advances, rolls and deflects the endoscope through the nose of a manikin; the inset shows the live endoscope view.</figcaption></figure>
+
+	<h2>Team</h2>
+	<p>Developed with the EndoSight Systems team through UCLA Biodesign, advised by UCLA Head &amp; Neck Surgery physicians and Dr. Veronica Santos.</p>
+
+	<h2 id="news">In the news</h2>
+	<ul class="dots">
+		<li><a href="https://biodesign.ucla.edu/articles/ucla-biodesign-teams-win-first-and-second-place-at-the" target="_blank">UCLA Biodesign teams win first and second place at the 2026 Lowell Milken Institute&ndash;Sandler competition</a> (UCLA Biodesign)</li>
+		<li><a href="https://biodesign.ucla.edu/articles/ucla-biodesign-teams-earn-first-place-and-semifinalist" target="_blank">UCLA Biodesign teams earn first place and semifinalist recognition at the 2026 UCLA Knapp Venture Competition</a> (UCLA Biodesign)</li>
+		<li><a href="https://lowellmilkeninstitute.law.ucla.edu/?p=83707" target="_blank">2026 Lowell Milken Institute&ndash;Sandler Prize for New Entrepreneurs: Final Round</a> (Lowell Milken Institute, UCLA School of Law)</li>
+	</ul>
+	<h3>Recognition</h3>
+	<ul class="dots">
+		<li><b>1st Prize</b>, Sandler Prize for New Entrepreneurs, Lowell Milken Institute, UCLA School of Law (2026)</li>
+		<li><b>1st Prize</b>, Knapp Venture Competition, UCLA Anderson School of Management (2026)</li>
+		<li><b>3rd Prize</b>, Cross Campus Innovation Challenge, Easton Technology Center, UCLA Anderson (2026)</li>
+	</ul>
+	<nav class="next"><a href="project3.html"><small>&larr; Previous</small>Human-Centered Teleoperation</a><a class="r" href="project2.html"><small>Next &rarr;</small>Electroadhesive Capstan</a></nav>
+</main>
+
+<footer class="foot">
+	<div class="wrap">
+		<span>&copy; Benjamin Forbes &middot; <a href="mailto:benforbes@ucla.edu">benforbes@ucla.edu</a></span>
+		<span class="icons">
+			<a href="https://scholar.google.com/citations?user=huMsObgAAAAJ&amp;hl=en" aria-label="Google Scholar"><i class="fas fa-graduation-cap"></i></a>
+			<a href="https://github.com/ben-forbes" aria-label="GitHub"><i class="fab fa-github"></i></a>
+			<a href="https://www.linkedin.com/in/benjamin-forbes-8b8379203/" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+			<a href="https://twitter.com/fenborbes" aria-label="X / Twitter"><i class="fab fa-twitter"></i></a>
+		</span>
+	</div>
+</footer>
+</body>
+</html>

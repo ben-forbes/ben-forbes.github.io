@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>H2Opti: Underwater Tactile Sensing | Benjamin Forbes</title>
+	<meta name="description" content="A fabric-armored, submersible vision-based tactile sensor with observation-aware replanning for diffusion policies." />
+	<meta property="og:type" content="article" />
+	<meta property="og:title" content="H2Opti: Underwater Tactile Sensing | Benjamin Forbes" />
+	<meta property="og:description" content="A fabric-armored, submersible vision-based tactile sensor with observation-aware replanning for diffusion policies." />
+	<meta property="og:image" content="https://ben-forbes.github.io/images/og.jpg" />
+	<meta name="twitter:card" content="summary_large_image" />
+	<link rel="icon" type="image/png" href="favicon.png" />
+	<link rel="apple-touch-icon" href="apple-touch-icon.png" />
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,900&display=swap" />
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap" />
+	<link rel="stylesheet" href="assets/css/fontawesome-all.min.css" />
+	<link rel="stylesheet" href="assets/css/home.css" />
+</head>
+<body>
+
+<header class="topbar">
+	<div class="wrap topbar-inner">
+		<a class="brand" href="index.html"><img src="images/logo.jpg" alt="" /><span>Benjamin Forbes</span></a>
+		<nav>
+			<a href="index.html#research">Research</a>
+			<a href="index.html#publications">Publications</a>
+			<a href="index.html#honors">Honors</a>
+			<a href="index.html#leadership">Leadership</a>
+			<a href="Ben_Forbes_CV.pdf" target="_blank">CV</a>
+		</nav>
+	</div>
+</header>
+
+<main class="wrap page">
+	<p class="crumbs"><a href="index.html#touch">&larr; Back</a></p>
+	<header class="ph">
+		<h1>H2Opti: Underwater Tactile Sensing</h1>
+		<p class="meta">Biomechatronics Lab, UCLA &middot; Provisional patent, 2025</p>
+		<p class="dek">A camera-based touch sensor covered in cut-resistant fabric so it survives sand, water and abrasion, plus a small change that helps diffusion policies notice contact.</p>
+		<div class="rolebox">
+		<p><b>My part:</b> I designed the H2Opti sensor and its diffusion-policy haptic search.</p>
+		</div>
+		<p class="lk"><a href="#videos">Videos</a> <span class="sep">&middot;</span> <a href="index.html#publications">Patent</a></p>
+	</header>
+
+
+	<h2>The problem</h2>
+	<p>Vision-based tactile sensors give robots a rich, high-resolution sense of touch, but their soft elastomer skins tear and wear quickly. That is a deal-breaker for field robotics, where touch matters most in exactly the places (murky water, sand, sharp debris) that destroy these sensors.</p>
+	<p>Worse, a worn sensor doesn&rsquo;t just fail at the end; it slowly drifts. A learned policy that reacts to changes in the tactile signal can&rsquo;t tell real contact apart from the sensor wearing out.</p>
+
+	<h2>The sensor</h2>
+	<div class="split">
+		<div>
+			<p>H2Opti&rsquo;s fingerpad is covered by a sewn layer of cut-resistant ultra-high molecular weight polyethylene (UHMWPE) fabric. The fabric does double duty: it armors the elastomer against abrasion and cuts, and its weave gives the internal camera natural features to track, with no printed markers needed.</p>
+			<p>The electronics are potted in optically clear resin, and the sensor stayed operational through a 72-hour submersion test.</p>
+		</div>
+		<figure class="figure"><img src="images/h2opti_render.jpg" alt="Exploded render of the H2Opti tactile sensor" loading="lazy" /><figcaption>Exploded view: sewn fabric, deformable surface, RGB LED, camera and housings.</figcaption></figure>
+	</div>
+
+	<h2>Durability testing</h2>
+	<p>I built a sandpaper treadmill test bed and used a UR5e to press each sensor into the belt at 5 N, cycle after cycle. To compare sensors fairly, I introduced <b>normalized cross-correlation (NCC) dissimilarity</b> between a sensor&rsquo;s pristine internal image and its image after each cycle: a lighting-invariant measure of how much wear corrupts the tactile signal.</p>
+	<div class="grid2">
+		<figure class="figure"><img src="images/h2opti_abrasion.jpg" alt="Abrasion test bed and sensor wear before and after" loading="lazy" /><figcaption>Test bed and wear on each sensor before and after failure.</figcaption></figure>
+		<figure class="figure"><img src="images/h2opti_ncc.jpg" alt="NCC dissimilarity versus abrasion cycles" loading="lazy" /><figcaption>H2Opti&rsquo;s signal drift (yellow) stays near zero for all 400 cycles.</figcaption></figure>
+	</div>
+	<p>Against two DIGIT-style elastomer sensors built with the same camera, lighting and elastomer, H2Opti lasted <b>400 cycles</b>, versus 100 and 226.</p>
+
+	<h2>Observation-aware replanning</h2>
+	<p>Diffusion policies normally commit to a fixed number of actions before looking again, so a brief contact event can slip by unnoticed. I developed <b>observation-aware replanning (OAR)</b>: at every timestep the policy compares its current latent observation to the one it planned from, and replans immediately when the change crosses a threshold. It needs no extra training, networks or architecture changes; it lives entirely at inference time.</p>
+	<figure class="figure"><img src="images/h2opti_task.jpg" alt="Robotic finger performing haptic search for a buried object" loading="lazy" /><figcaption>A 4-DOF robotic finger searches by touch alone for a hex nut buried in glass beads.</figcaption></figure>
+	<div class="split">
+		<div>
+			<p>Policies were trained only on dry demonstrations, then evaluated both dry and fully submerged underwater.</p>
+			<p>OAR significantly outperformed standard diffusion policies in both conditions (<b>44.0% vs. 31.2%</b> task success dry; <b>45.6% vs. 32.0%</b> underwater), and the same replanning threshold transferred underwater without re-tuning.</p>
+		</div>
+		<figure class="figure"><img src="images/h2opti_results.jpg" alt="Task success rate versus action execution horizon" loading="lazy" /><figcaption>Task success vs. execution horizon, dry (solid) and submerged (dashed).</figcaption></figure>
+	</div>
+
+	<h2 id="videos">Videos</h2>
+	<div class="grid2">
+		<figure class="figure"><video autoplay muted loop playsinline preload="metadata" poster="images/h2opti_search_poster.jpg" aria-label="Robotic finger finding a buried object by touch"><source src="images/h2opti_search.mp4" type="video/mp4" /></video><figcaption>Haptic search: the finger (left) and what H2Opti sees (right).</figcaption></figure>
+		<figure class="figure"><video autoplay muted loop playsinline preload="metadata" poster="images/h2opti_abrasion_poster.jpg" aria-label="UR5e pressing the sensor into a sandpaper belt"><source src="images/h2opti_abrasion.mp4" type="video/mp4" /></video><figcaption>Abrasion testing on the sandpaper belt (2&times; speed).</figcaption></figure>
+	</div>
+	<p><b>Patent:</b> &ldquo;Vision-Based Tactile Sensor with Fabric Layer,&rdquo; U.S. Provisional Patent Application No. 63/915,657 (filed November 2025).</p>
+	<nav class="next"><span></span><a class="r" href="project3.html"><small>Next &rarr;</small>Human-Centered Teleoperation</a></nav>
+</main>
+
+<footer class="foot">
+	<div class="wrap">
+		<span>&copy; Benjamin Forbes &middot; <a href="mailto:benforbes@ucla.edu">benforbes@ucla.edu</a></span>
+		<span class="icons">
+			<a href="https://scholar.google.com/citations?user=huMsObgAAAAJ&amp;hl=en" aria-label="Google Scholar"><i class="fas fa-graduation-cap"></i></a>
+			<a href="https://github.com/ben-forbes" aria-label="GitHub"><i class="fab fa-github"></i></a>
+			<a href="https://www.linkedin.com/in/benjamin-forbes-8b8379203/" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+			<a href="https://twitter.com/fenborbes" aria-label="X / Twitter"><i class="fab fa-twitter"></i></a>
+		</span>
+	</div>
+</footer>
+</body>
+</html>
