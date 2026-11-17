@@ -41,13 +41,16 @@
 		<div class="rolebox">
 		<p><b>My part:</b> I designed the H2Opti sensor and its diffusion-policy haptic search.</p>
 		</div>
-		<p class="lk"><a href="#videos">Videos</a> <span class="sep">&middot;</span> <a href="index.html#publications">Patent</a></p>
+		<div class="highlights">
+			<p class="hl-label"><b>Highlights:</b></p>
+			<p>Provisional patent: &ldquo;Vision-Based Tactile Sensor with Fabric Layer,&rdquo; 2025</p>
+		</div>
 	</header>
 
 
 	<h2>The problem</h2>
 	<p>Vision-based tactile sensors give robots a rich, high-resolution sense of touch, but their soft elastomer skins tear and wear quickly. That is a deal-breaker for field robotics, where touch matters most in exactly the places (murky water, sand, sharp debris) that destroy these sensors.</p>
-	<p>Worse, a worn sensor doesn&rsquo;t just fail at the end; it slowly drifts. A learned policy that reacts to changes in the tactile signal can&rsquo;t tell real contact apart from the sensor wearing out.</p>
+	<p>Worse, a worn sensor doesn&rsquo;t just fail at the end. It slowly drifts. A learned policy that reacts to changes in the tactile signal can&rsquo;t tell real contact apart from the sensor wearing out.</p>
 
 	<h2>The sensor</h2>
 	<div class="split">
@@ -67,21 +70,18 @@
 	<p>Against two DIGIT-style elastomer sensors built with the same camera, lighting and elastomer, H2Opti lasted <b>400 cycles</b>, versus 100 and 226.</p>
 
 	<h2>Observation-aware replanning</h2>
-	<p>Diffusion policies normally commit to a fixed number of actions before looking again, so a brief contact event can slip by unnoticed. I developed <b>observation-aware replanning (OAR)</b>: at every timestep the policy compares its current latent observation to the one it planned from, and replans immediately when the change crosses a threshold. It needs no extra training, networks or architecture changes; it lives entirely at inference time.</p>
+	<p>Diffusion policies normally commit to a fixed number of actions before looking again, so a brief contact event can slip by unnoticed. I developed <b>observation-aware replanning (OAR)</b>: at every timestep the policy compares its current latent observation to the one it planned from, and replans immediately when the change crosses a threshold. It needs no extra training, networks or architecture changes. It runs entirely at inference time.</p>
 	<figure class="figure"><img src="images/h2opti_task.jpg" alt="Robotic finger performing haptic search for a buried object" loading="lazy" /><figcaption>A 4-DOF robotic finger searches by touch alone for a hex nut buried in glass beads.</figcaption></figure>
 	<div class="split">
 		<div>
 			<p>Policies were trained only on dry demonstrations, then evaluated both dry and fully submerged underwater.</p>
-			<p>OAR significantly outperformed standard diffusion policies in both conditions (<b>44.0% vs. 31.2%</b> task success dry; <b>45.6% vs. 32.0%</b> underwater), and the same replanning threshold transferred underwater without re-tuning.</p>
+			<p>OAR significantly outperformed standard diffusion policies in both conditions (<b>44.0% vs. 31.2%</b> task success dry, and <b>45.6% vs. 32.0%</b> underwater), and the same replanning threshold transferred underwater without re-tuning.</p>
 		</div>
 		<figure class="figure"><img src="images/h2opti_results.jpg" alt="Task success rate versus action execution horizon" loading="lazy" /><figcaption>Task success vs. execution horizon, dry (solid) and submerged (dashed).</figcaption></figure>
 	</div>
 
-	<h2 id="videos">Videos</h2>
-	<div class="grid2">
-		<figure class="figure"><video autoplay muted loop playsinline preload="metadata" poster="images/h2opti_search_poster.jpg" aria-label="Robotic finger finding a buried object by touch"><source src="images/h2opti_search.mp4" type="video/mp4" /></video><figcaption>Haptic search: the finger (left) and what H2Opti sees (right).</figcaption></figure>
-		<figure class="figure"><video autoplay muted loop playsinline preload="metadata" poster="images/h2opti_abrasion_poster.jpg" aria-label="UR5e pressing the sensor into a sandpaper belt"><source src="images/h2opti_abrasion.mp4" type="video/mp4" /></video><figcaption>Abrasion testing on the sandpaper belt (2&times; speed).</figcaption></figure>
-	</div>
+	<h2 id="videos">Video</h2>
+	<figure class="figure"><video autoplay muted loop playsinline preload="metadata" poster="images/h2opti_contact_poster.jpg" aria-label="Robotic finger touching a buried object, with the H2Opti sensor view"><source src="images/h2opti_contact.mp4" type="video/mp4" /></video><figcaption>The finger (left) and the H2Opti sensor view (right) as it searches and then touches the buried object.</figcaption></figure>
 	<p><b>Patent:</b> &ldquo;Vision-Based Tactile Sensor with Fabric Layer,&rdquo; U.S. Provisional Patent Application No. 63/915,657 (filed November 2025).</p>
 	<nav class="next"><span></span><a class="r" href="project3.html"><small>Next &rarr;</small>Human-Centered Teleoperation</a></nav>
 </main>

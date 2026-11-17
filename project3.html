@@ -37,64 +37,42 @@
 	<header class="ph">
 		<h1>Human-Centered Bimanual Teleoperation</h1>
 		<p class="meta">Human Fusions Institute (UCLA, Case Western, Cleveland State) &middot; IEEE Haptics Symposium poster, 2026</p>
-		<p class="dek">A two-arm robot that a person operates through a passthrough headset across large distances, seeing through the robot&rsquo;s camera and still <i>feeling</i> what it touches, and a shared autonomy controller that learns from each operator.</p>
+		<p class="dek">A two-arm robot that a person operates through a passthrough headset across large distances, seeing through the robot&rsquo;s camera and still <i>feeling</i> what it touches, and shared autonomy that adapts to each operator.</p>
 		<div class="rolebox">
 		<p><b>My part:</b> I lead the controls team. I wrote the teleoperation controller and run the shared autonomy study.</p>
 		</div>
-		<p class="lk"><a href="#video">Video</a> <span class="sep">&middot;</span> <a href="Forbes_HapticsSymposium2026_poster.pdf" target="_blank">Poster (PDF)</a></p>
+		<div class="highlights">
+			<p class="hl-label"><b>Highlights:</b></p>
+			<p>Poster, IEEE Haptics Symposium, 2026</p>
+		</div>
 	</header>
 
-	<figure class="figure"><video autoplay muted loop playsinline preload="metadata" poster="images/teleop_loop_poster.jpg" aria-label="Operator in a passthrough headset beside the two robot arms as they finish the pulley task"><source src="images/teleop_loop.mp4" type="video/mp4" /></video><figcaption>The operator (left) pulls the rope through the robot (right) to trigger the pulley. 1.5&times; speed.</figcaption></figure>
+	<figure class="figure" id="video"><video controls muted playsinline preload="metadata" poster="images/onr_demo_web_poster.jpg" aria-label="Full one-take teleoperation demo"><source src="images/onr_demo_web.mp4" type="video/mp4" /></video><figcaption>One continuous take at 1&times; speed: an operator wearing the passthrough headset completes a pulley-and-rope task. Panels show the robot, the headset view and eyes, tactile feedback, and heart rate.</figcaption></figure>
 
 	<h2>The system</h2>
-	<p>The Office of Naval Research funds this collaboration between UCLA, Case Western Reserve University and Cleveland State University. The system pairs a 7-DOF Franka Emika FR3 with a 6-DOF Universal Robots UR5e. Each arm carries a gripper instrumented with vision-based tactile sensors, and an egocentric camera streams the scene to the operator&rsquo;s headset.</p>
-	<figure class="figure wide"><img src="images/teleop_overview.jpg" alt="Human, interface and robot: the operator in a passthrough headset, the four mappings between them, and the bimanual robot" loading="lazy" /><figcaption>The operator, the interface between them, and the robot.</figcaption></figure>
+	<p>The Office of Naval Research funds this collaboration between UCLA, Case Western Reserve University and Cleveland State University. The system uses two Franka FR3 arms. Each carries a 1-DOF Fin-Ray gripper with vision-based tactile sensors and a wrist camera, and a stereo camera streams the scene to the operator&rsquo;s headset.</p>
 
 	<h3>How the person and the robot connect</h3>
-	<div class="split">
-		<div>
-			<p>Four channels tie the operator to the robot. Moving the wrist moves the arm, and closing the hand closes the gripper.</p>
-			<p>When the gripper&rsquo;s tactile sensors touch something, the operator feels it on their hand through neurohaptic display rings designed by our collaborators at Case Western.</p>
-			<p>Turning the head turns the camera, and its view streams back to the headset.</p>
-		</div>
-		<figure class="figure"><img src="images/teleop_mapping.jpg" alt="Wrist, finger, tactile and head-and-vision mappings between operator and robot" loading="lazy" /><figcaption>Clockwise from top left: wrist, finger, head and vision, tactile.</figcaption></figure>
-	</div>
+	<p>Four channels tie the operator to the robot. Moving the wrist moves the arm, and closing the hand closes the gripper.</p>
+	<p>When the gripper&rsquo;s tactile sensors touch something, the operator feels it on their hand through neurohaptic display rings designed by our collaborators at Case Western.</p>
+	<p>Turning the head turns the camera, and its view streams back to the headset.</p>
+	<figure class="figure wide"><img src="images/teleop_interface_map.jpg" alt="Wrist, finger, tactile and head-and-vision mappings between operator and robot" loading="lazy" /><figcaption>The four channels between the operator and the robot.</figcaption></figure>
 
 	<h2>Teleoperation controller</h2>
-	<div class="split">
-		<div>
-			<p>The controller had to:</p>
-			<ul class="dots">
-				<li>Avoid kinematic singularities</li>
-				<li>Maximize manipulability of the end effector</li>
-				<li>Support both &ldquo;palm up&rdquo; and &ldquo;palm down&rdquo; hand configurations</li>
-				<li>Keep up with human movements</li>
-			</ul>
-			<p>I developed an optimization-based controller that maximizes manipulability and minimizes joint velocities within each arm&rsquo;s kinematic limits, keeping the robot responsive and predictable so the operator feels embodied in it. It runs in ROS 2 across both arms.</p>
-		</div>
-		<figure class="figure"><img src="images/onr_cad.jpg" alt="CAD of the bimanual teleoperation system" loading="lazy" /><figcaption>System CAD.</figcaption></figure>
-	</div>
+	<p>The controller had to:</p>
+	<ul class="dots">
+		<li>Avoid kinematic singularities</li>
+		<li>Maximize manipulability of the end effector</li>
+		<li>Support both &ldquo;palm up&rdquo; and &ldquo;palm down&rdquo; hand configurations</li>
+		<li>Keep up with human movements</li>
+	</ul>
+	<p>I developed an optimization-based controller that maximizes manipulability and minimizes joint velocities within each arm&rsquo;s kinematic limits, keeping the robot responsive and predictable so the operator feels embodied in it. It runs in ROS 2 across both arms.</p>
+	<figure class="figure wide"><img src="images/teleop_robot_arms.jpg" alt="Two FR3 robot arms with Fin-Ray grippers, tactile sensors, wrist cameras and a stereo camera" loading="lazy" /><figcaption>The robot side.</figcaption></figure>
 
-	<h2>Learning-based shared autonomy</h2>
-	<div class="split">
-		<figure class="figure"><img src="images/teleop_interface.jpg" alt="Operator wearing a passthrough headset with eye tracking, ECG and neurohaptic rings" loading="lazy" /><figcaption>What we capture from the operator.</figcaption></figure>
-		<div>
-			<p>Shared autonomy systems are usually judged on task speed and accuracy. My research asks how they feel to the person in the loop: <b>sense of agency, trust and embodiment</b>. Touch anchors the operator&rsquo;s presence while working remotely.</p>
-			<p>While participants teleoperate, we capture eye gaze (direction, pupil diameter, focus distance) from a Varjo headset, ECG, and head, wrist and finger kinematics, as windows into the operator&rsquo;s experience, not just markers of performance.</p>
-		</div>
-	</div>
-	<div class="split">
-		<div>
-			<p>In <b>Phase 1</b>, participants perform the task with direct teleoperation. Their data trains a <b>personalized shared autonomy controller</b> that incorporates gaze and tactile information. In <b>Phase 2</b>, they return and repeat the task under randomized A/B conditions, shared autonomy versus direct teleoperation, with workload and trust surveys alongside the multimodal data.</p>
-			<p>The task is deliberately open-ended: place pulleys, thread a rope, and clip a carabiner to move a breakable object to a goal, a problem that rewards human creativity and long-horizon planning.</p>
-		</div>
-		<figure class="figure"><img src="images/teleop_design.jpg" alt="Two-phase experimental design" loading="lazy" /><figcaption>Two-phase study design.</figcaption></figure>
-	</div>
-
-	<h2 id="video">Full demo</h2>
-	<p>One continuous take at 1&times; speed: an operator wearing the passthrough headset completes the five-step pulley task (clip the carabiner, route the rope, close the pulley, hang it on the hook, and pull the rope to trigger the pulley). Panels show the robot, the headset view and eyes, tactile feedback, and heart rate.</p>
-	<figure class="figure"><video controls muted playsinline preload="metadata" poster="images/onr_demo_web_poster.jpg" aria-label="Full one-take teleoperation demo"><source src="images/onr_demo_web.mp4" type="video/mp4" /></video></figure>
-	<figure class="figure"><img src="images/teleop_task.jpg" alt="Pulley and carabiner task, before and after" loading="lazy" /><figcaption>The task board before and after.</figcaption></figure>
+	<h2>Shared autonomy</h2>
+	<p>Shared autonomy is usually judged on speed and accuracy. I&rsquo;m interested in how it feels to the person in the loop: their sense of agency, trust and embodiment.</p>
+	<p>We record gaze, heart rate and motion while people use the system, and use that data to build shared autonomy that adapts to each operator. The study is underway now, so more to come.</p>
+	<figure class="figure wide"><img src="images/teleop_human.jpg" alt="Operator in a passthrough headset with eye tracking, heart-rate monitoring and tracked gloves" loading="lazy" /><figcaption>The operator side.</figcaption></figure>
 	<p>Presented at the <b>IEEE Haptics Symposium 2026</b> (Cross-Cutting Challenge: Touch, Embodiment, and Multisensory Future). <a href="Forbes_HapticsSymposium2026_poster.pdf" target="_blank">View the poster (PDF)</a>.</p>
 	<nav class="next"><a href="project7.html"><small>&larr; Previous</small>H2Opti</a><a class="r" href="project8.html"><small>Next &rarr;</small>Autonomous Laryngoscopy</a></nav>
 </main>
